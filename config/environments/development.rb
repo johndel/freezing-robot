@@ -22,8 +22,24 @@ FreezingRobot::Application.configure do
   # Raise an error on page load if there are pending migrations
   config.active_record.migration_error = :page_load
 
+  config.ember.variant = :development
+
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  # Debug mode disables concatenation and preprocessing of assets.
+  config.sass.debug_info = true
+  config.sass.line_comments = false # source maps don't get output if this is true
+
+  # Bullet gem, for finding N+1 queries
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.rails_logger = true
+  end
+
+  # Letter Opener
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.delivery_method = :letter_opener
 end

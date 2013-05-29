@@ -27,6 +27,15 @@ gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.0.1'
+gem 'compass-rails'
+gem 'ember-rails', github: "emberjs/ember-rails"
+gem 'handlebars-source',          '1.0.0.rc3'
+gem 'paperclip',                  '~> 3.0'
+gem 'bootstrap-sass',             '2.3.1.0'
+gem "zeus"
+gem 'puma'
+
+
 
 # Groups
 group :test, :development do
@@ -34,6 +43,7 @@ group :test, :development do
   gem 'pry-rails'
   gem 'pry-stack_explorer'
   gem 'pry-debugger'
+  gem 'letter_opener'
   gem "rspec-rails", "~> 2.0"
 end
 
@@ -45,8 +55,6 @@ group :test do
   gem "launchy"
   gem 'shoulda-matchers'
   gem 'database_cleaner'
-  gem 'letter_opener'
-  gem "zeus"
   gem 'konacha'
   gem 'guard-konacha'
 
@@ -54,6 +62,15 @@ group :test do
   gem 'rb-fsevent' if RUBY_PLATFORM.match(/darwin/)
   #needed by guard on ubuntu
   gem 'rb-inotify', '~> 0.9' unless RUBY_PLATFORM.match(/darwin/)
+end
+
+group :development do
+  gem 'better_errors'
+  gem 'quiet_assets'
+  gem 'bullet'
+  # For coffeescript debugging
+  gem 'tilt'
+  gem 'coffee-rails-source-maps'
 end
 
 group :doc do

@@ -5,6 +5,8 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
+
+Capybara.asset_host = "http://localhost:3000"
 Capybara.javascript_driver = :poltergeist
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -16,23 +18,20 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
+  config.color_enabled = true
   config.use_transactional_fixtures = false
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.before(:each) do
-    # Database Cleaner doesn't work right now in this version with transaction,
-    # The following strategy will be replaced with transaction in the next versions
-    DatabaseCleaner.strategy = :transaction
-  end
-
-  config.before(:each, :js => true) do
-    DatabaseCleaner.strategy = :truncation
-  end
 
   config.before(:each) do
+    DatabaseCleaner.strategy = if example.metadata[:js]
+                                 :truncation
+                               else
+                                 :transaction
+                               end
     DatabaseCleaner.start
   end
 
